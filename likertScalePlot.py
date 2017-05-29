@@ -228,7 +228,7 @@ def likert_scale(df, normalise=True, labels=True, middle_line=True, legend=True,
         ax.legend(bars, df.columns)
 
     # Set up the limit from 0 to the longest total barchart
-    ax.set_xlim([0, complete_longest + .5])
+    ax.set_xlim([-0.5, complete_longest + 0.5])
 
     # Create the values with the same length as the xlim
     # xvalues = range(0, int(complete_longest), int((int(longest_middle)%5)))
