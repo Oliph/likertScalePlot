@@ -170,6 +170,34 @@ def add_labels(df, ax, bars, rotation=0):
             ax.text(x, y, "{}".format(percentages[i, j]), ha='center', rotation=rotation)
 
 
+def draw_middle_line(normalise, longest_middle):
+    """
+    """
+    # Draw a dashed line on the middle to visualise it
+    if normalise:
+        z = plt.axvline(100, linestyle='--', color='black', alpha=.5)
+    else:
+        z = plt.axvline(longest_middle, linestyle='--', color='black', alpha=.5)
+    # Plot the line behind the barchart
+    z.set_zorder(-1)
+
+
+def drawing_x_labels(normalise, complete_longest, longest_middle):
+    """
+    """
+    # Create the values with the same length as the xlim
+    if normalise:
+        xvalues = range(0, 210, 10)
+        xlabels = [str(math.floor(abs(x - 100))) for x in xvalues]
+    else:
+        print('NOT normalised')
+        xvalues = [math.floor(i - (longest_middle %5))
+                   for i in range(0, int(complete_longest),
+                                  int(int(longest_middle)/ 5))]
+        xlabels = [str(math.floor(abs(x - longest_middle))) for x in xvalues]
+    plt.xticks(xvalues, xlabels)
+
+
 def likert_scale(df, normalise=True, labels=True, middle_line=True, legend=True, rotation=0):
     """
     The idea is to create a fake bar on the left to center the bar on the same point.
@@ -215,53 +243,30 @@ def likert_scale(df, normalise=True, labels=True, middle_line=True, legend=True,
     # Create the horizontal bars
     bars = create_bars(df, ax, y_pos, colors, left_invisible_bar)
 
+    # Set up the limit from 0 to the longest total barchart
+    # Keeping this drawing before drawing_x_labels or it will failed to draw
+    # all the labels on the right side
+    ax.set_xlim([-0.5, complete_longest + 0.5])
+
+    # Drawing x_labels
+    drawing_x_labels(normalise, complete_longest, longest_middle)
+    ax.set_xlabel('Percentages')
+
+    # Setting up the y-axis
+    ax.set_yticks(y_pos)
+    ax.set_yticklabels(df.index)
+
     # Add labels to each box
     if labels:
         add_labels(df, ax, bars, rotation)
 
     # Create a line on the middle
     if middle_line:
-        # Draw a dashed line on the middle to visualise it
-        if normalise:
-            z = plt.axvline(100, linestyle='--', color='black', alpha=.5)
-        else:
-            z = plt.axvline(longest_middle, linestyle='--', color='black', alpha=.5)
-        # Plot the line behind the barchart
-        z.set_zorder(-1)
+        draw_middle_line(normalise, longest_middle)
 
     # Add legend
     if legend:
         ax.legend(bars, df.columns)
-
-    # Set up the limit from 0 to the longest total barchart
-    ax.set_xlim([-0.5, complete_longest + 0.5])
-
-    # Create the values with the same length as the xlim
-    # xvalues = range(0, int(complete_longest), int((int(longest_middle)%5)))
-
-    if normalise:
-        xvalues = range(0, 200, 10)
-    else:
-        xvalues = [math.floor(i - (longest_middle %5))
-                   for i in range(0, int(complete_longest),
-                                  int(int(longest_middle)/ 5))]
-
-    print('Value for the range: length: {}  -- step: {}'.format(int(complete_longest),
-                                                                int((int(longest_middle/5)))))
-    print('COMPLETE LONGEST: {}'.format(complete_longest))
-    print('XVALUES')
-    print(xvalues)
-    # Create label by using the absolute value of the
-    if normalise:
-        xlabels = [str(math.floor(abs(x - 100))) for x in xvalues]
-    else:
-        xlabels = [str(math.floor(abs(x - longest_middle))) for x in xvalues]
-    print('XLABELS')
-    print(xlabels)
-    plt.xticks(xvalues, xlabels)
-    ax.set_yticks(y_pos)
-    ax.set_yticklabels(df.index)
-    ax.set_xlabel('Percentages')
 
 
 def count_unique_value(df, colnames, rename_columns=False, dropna=False, normalize=False):
@@ -289,7 +294,7 @@ def main():
     """
     """
 
-    df = pd.DataFrame(np.random.randint(0,100,size=(100, 3)), columns=list('XYZ'))
+    # df = pd.DataFrame(np.random.randint(0,100,size=(100, 3)), columns=list('XYZ'))
     dummy = pd.DataFrame([[1, 2, 3, 4, 5, 2], [5, 6, 7, 8, 5, 2], [10, 4, 2, 10, 5, 2]],
                          columns=["SD", "D", "N", "A", "SA", 'TEST'],
                          index=["Key 1", "Key B", "Key III"])
