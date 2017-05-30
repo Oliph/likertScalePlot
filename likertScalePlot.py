@@ -252,8 +252,10 @@ def likert_scale(df, normalise=True, labels=True, middle_line=True, legend=True,
     print('XVALUES')
     print(xvalues)
     # Create label by using the absolute value of the
-    xlabels = [str(math.floor(abs(x - longest_middle))) for x in xvalues]
-    xlabels = [str(math.floor(abs(x - 100))) for x in xvalues]
+    if normalise:
+        xlabels = [str(math.floor(abs(x - 100))) for x in xvalues]
+    else:
+        xlabels = [str(math.floor(abs(x - longest_middle))) for x in xvalues]
     print('XLABELS')
     print(xlabels)
     plt.xticks(xvalues, xlabels)
