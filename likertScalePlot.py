@@ -198,7 +198,10 @@ def likert_scale(df, normalise=True, labels=True, middle_line=True, legend=True,
 
     # Calculate the longest middle bar to set up the middle of the x-axis for the x-lables
     # and plot the middle line
-    longest_middle = middles.max()
+    if normalise:
+        longest_middle = 100
+    else:
+        longest_middle = middles.max()
     print('LONGEST MIDDLE: {}'.format(longest_middle))
 
     # Create the left bar to centre the barchart in the middle
@@ -219,7 +222,10 @@ def likert_scale(df, normalise=True, labels=True, middle_line=True, legend=True,
     # Create a line on the middle
     if middle_line:
         # Draw a dashed line on the middle to visualise it
-        z = plt.axvline(longest_middle, linestyle='--', color='black', alpha=.5)
+        if normalise:
+            z = plt.axvline(100, linestyle='--', color='black', alpha=.5)
+        else:
+            z = plt.axvline(longest_middle, linestyle='--', color='black', alpha=.5)
         # Plot the line behind the barchart
         z.set_zorder(-1)
 
@@ -234,7 +240,7 @@ def likert_scale(df, normalise=True, labels=True, middle_line=True, legend=True,
     # xvalues = range(0, int(complete_longest), int((int(longest_middle)%5)))
 
     if normalise:
-        xvalues = range(0, 100, 20)
+        xvalues = range(0, 200, 10)
     else:
         xvalues = [math.floor(i - (longest_middle %5))
                    for i in range(0, int(complete_longest),
@@ -247,12 +253,13 @@ def likert_scale(df, normalise=True, labels=True, middle_line=True, legend=True,
     print(xvalues)
     # Create label by using the absolute value of the
     xlabels = [str(math.floor(abs(x - longest_middle))) for x in xvalues]
+    xlabels = [str(math.floor(abs(x - 100))) for x in xvalues]
     print('XLABELS')
     print(xlabels)
     plt.xticks(xvalues, xlabels)
     ax.set_yticks(y_pos)
     ax.set_yticklabels(df.index)
-    ax.set_xlabel('Distance')
+    ax.set_xlabel('Percentages')
 
 
 def count_unique_value(df, colnames, rename_columns=False, dropna=False, normalize=False):
