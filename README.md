@@ -1,5 +1,5 @@
 # likertScalePlot
-Plotting likert scales (divergent bar) with matplotlib and mimic the behaviour of XXXXX, a package available with R
+Plotting likert scales (divergent bar) with matplotlib and mimic the behaviour of HH, a package available with R
 
 
 ## Description
@@ -10,8 +10,7 @@ This small wrap up around matplotlib and pandas produces this LikertScale (or st
 
 ## Use
 
-- The script accept a dataframe containing the different items of the scale. It then output a plot as shown here #INSERT PICTURE
-
+- The script accept a dataframe containing the different items of the scale. It then output a plot.
 
 
 
