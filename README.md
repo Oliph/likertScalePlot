@@ -20,4 +20,8 @@ The project is under the BSD 2-Clause License and the LICENCE is attached [here]
 
 ## Author
 
+## References
+This work is based on the following discussion and solutions provided on stackoverflow:
+* http://stackoverflow.com/questions/23142358/create-a-diverging-stacked-bar-chart-in-matplotlib
+* http://stackoverflow.com/questions/21397549/stack-bar-plot-in-matplotlib-and-add-label-to-each-section-and-suggestions
 
