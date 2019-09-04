@@ -7,12 +7,10 @@ Plotting function to draw a likert scale.
 To plot diverging horizontal barchart as needed for a likert scale
 A simple code that try to mimic what it is possible with the package HH in R.
 This script is an adaptation of the answers found:
- http://stackoverflow.com/questions/23142358/create-a-diverging-stacked-bar-chart-in-matplotlib
- http://stackoverflow.com/questions/21397549/stack-bar-plot-in-matplotlib-and-add-label-to-each-section-and-suggestions
 """
 
 __author__ = 'Olivier PHILIPPE'
-__licence__ = 'BSD 3-clause'
+__licence__ = 'BSD 2-clause'
 
 import math
 import pandas as pd
