@@ -1,6 +1,9 @@
 # likertScalePlot
 Plotting likert scales (divergent bar) with matplotlib and mimic the behaviour of HH, a package available with R
 
+## ATTENTION
+ This is not maintained and now there is a better solution developed by others here: https://github.com/nmalkin/plot-likert
+
 
 ## Description
 
